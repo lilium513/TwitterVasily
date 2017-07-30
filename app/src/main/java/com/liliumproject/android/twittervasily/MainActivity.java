@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.twitter.sdk.android.core.Callback;
@@ -31,39 +32,58 @@ import com.twitter.sdk.android.core.services.StatusesService;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TweetTimelineRecyclerViewAdapter;
 
-public class MainActivity extends AppCompatActivity  {
-    TwitterLoginButton loginButton;
-    TwitterSession session;
-    TwitterAuthToken authToken;
-    String token;
-    String secret;
-    TextView t;
+import static android.R.attr.button;
 
+public class MainActivity extends AppCompatActivity  {
+
+    Button button;
+    RecyclerView recyclerView;
+    TweetTimelineRecyclerViewAdapter adapter;
+    SearchTimeline searchTimeline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Twitter.initialize(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        button = (Button) findViewById(R.id.button);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final SearchTimeline searchTimeline = new SearchTimeline.Builder().languageCode("ja").query("iQON")
+         searchTimeline = new SearchTimeline.Builder().languageCode("ja").query("iQON")
                 .maxItemsPerRequest(1000).resultType(SearchTimeline.ResultType.RECENT)
                 .build();
-        final TweetTimelineRecyclerViewAdapter adapter =
+         adapter =
                 new TweetTimelineRecyclerViewAdapter.Builder(this)
                         .setTimeline(searchTimeline)
                         .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
                         .build();
 
 
-
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter =
+                        new TweetTimelineRecyclerViewAdapter.Builder(getApplicationContext())
+                                .setTimeline(searchTimeline)
+                                .setViewStyle(R.style.tw__TweetLightWithActionsStyle)
+                                .build();
+                adapter.notifyDataSetChanged();
+               // recyclerView.setAdapter(adapter);
+
+
+
+
+            }
+        });
     }
 
     @Override
@@ -74,9 +94,7 @@ public class MainActivity extends AppCompatActivity  {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Pass the activity result to the login button.
-        loginButton.onActivityResult(requestCode, resultCode, data);
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
