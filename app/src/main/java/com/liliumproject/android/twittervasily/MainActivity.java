@@ -61,35 +61,9 @@ public class MainActivity extends AppCompatActivity  {
 
         recyclerView.setAdapter(adapter);
 
-//        t= (TextView) findViewById(R.id.textView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-////        loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
-////        loginButton.setCallback(new Callback<TwitterSession>() {
-////            @Override
-////            public void success(Result<TwitterSession> result) {
-////                // Do something with result, which provides a TwitterSession for making API calls
-////                session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-////                 authToken = session.getAuthToken();
-////                 token = authToken.token;
-////                 secret = authToken.secret;
-////                t.setText("さくせす!");
-////                TwitterApiClient twitterApiClient = TwitterCore.getInstance().getApiClient();
-////                StatusesService statusesService = twitterApiClient.getStatusesService();
-////            }
-//
-//            @Override
-//            public void failure(TwitterException exception) {
-//                // Do something on failure
-//            }
-//        });
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -106,9 +80,7 @@ public class MainActivity extends AppCompatActivity  {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
